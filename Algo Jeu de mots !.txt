@@ -1,0 +1,321 @@
+Sujet : Ecrire un programme « La valse des mots » en langage C qui propose à ses utilisateurs 
+de choisir dans un menu :
+
+    Conjugaison d’un verbe du 1er groupe au présent, à l’imparfait et au futur - 
+	l’utilisateur saisit le verbe à l’infinitif et le programme affiche les conjugaisons 
+	de ce verbe au présent, à l’imparfait puis au futur. 
+	Par exemple si l’utilisateur saisit le verbe ‘chanter’, le programme affiche :
+
+Je chante, tu chantes, il chante, nous chantons, …
+
+Je chantais, tu chantais, il chantait, nous chantions, …
+
+Je chanterai, tu chanteras, il chantera, nous chanterons, …
+
+ 
+Un mot est un tableau de caractères en langage C
+
+Utiliser plusieurs tableaux pour résoudre cette partie du projet
+
+	Miroir (Le mot miroir de ‘programmation’ est ‘noitammargorp’) 
+	- l’utilisateur saisit le mot et le programme affiche ce mot dans l’ordre inverse
+    
+	Palindrome (‘Kayak’ est un palindrome : il se lit dans les deux sens) 
+	- l’utilisateur saisit le mot, le programme répond si le mot est un palindrome 
+	ou s’il ne l’est pas
+    
+	Occurrence d’une lettre dans un mot de 15 lettres maximum 
+	(L’utilisateur choisit le mot et la lettre. 
+	Par exemple s’il saisit le mot ‘abracadabra’
+	et la lettre ‘a’, le programme affichera : On trouve 5 ‘a’ dans le mot ‘abracadabra’)
+
+Utiliser des sous-programmes : procédures ET fonctions dans ce projet
+
+En janvier vous soutiendrez ce projet à l’oral.
+
+Vous présenterez également un dossier contenant les algorithmes,
+les captures d’écran de vos différents tests et le code source.
+
+
+
+
+ECRAN MENU:
+---------------------------
+Menu principal :          |
+C : Conjugaison			  |
+M : Miroir 		          |
+P : Palindrome		      |
+O : Occurrence			  |
+Q : Quitter			      |
+Quel est votre choix ?:   |
+...		          	  	  |  
+---------------------------
+
+Procédure Affichemenu()
+Debut
+	Afficher "Menu principal"
+	Afficher "C : Conjugaison"
+	Afficher "M : Miroir"
+	Afficher "P : Palindrome"
+	Afficher "O : Occurrence"
+	Afficher "Q : Quitter"
+	Afficher "Choisissez ce que vous voulez faire, en saisissant une des 
+	lettres : "
+	
+Fin
+__________________________________________________________________________________
+
+ECRAN OCCURRENCE :
+-------------------------------------
+Menu Occurrence :                   |
+Choisissez un mot (15 lettres max): |
+...						        	|
+Choisissez une lettre :				|
+...									|
+Il y a ;;;;  ;;;; dans le mot ;;;;	|
+Voulez- vous reessayer ? (O/N)		|
+...									|
+									|
+-------------------------------------
+
+Procédure Occurrence()
+
+VAR lettre, rep, mot[0-99] : char
+	cpt, i : entier
+
+Debut
+	Repeter
+		Afficher "Menu Occurrence :"
+		Afficher "Ce programme calcule le nombre d'occurrences d'une lettre 
+		dans votre mot"
+		Afficher "Choisissez un mot (15 lettres max):"
+		REPETER
+			Saisir mot
+			Si LONGUEUR(mot)>15
+				Afficher "Erreur ! votre mot fais plus de 15 lettres, 
+				recommencez :"
+			FinSi
+		Jusqu'à LONGUEUR(mot) <= 14
+		Afficher "Choisissez une lettre :"
+		Saisir lettre
+		i <-- 0
+		cpt <-- 0
+		Pour i allant de 0 à 14 faire
+			Si mot[i] = lettre alors
+				cpt <= cpt+1
+			FinSi
+		i <-- i+1
+		FinPour
+		Afficher "Il y a " cpt " " lettre "dans le mot" mot "."
+		Afficher "Voulez- vous reessayer ? (O/N)"
+		Saisir rep
+	Jusqu'a rep <-- N
+Fin
+________________________________________________________________________
+
+ECRAN MIROIR :
+-------------------------------------------------------------------------
+Menu Miroir : 															|
+Saisir un mot et le programme affiche ce mot dans l'ordre inverse		|
+...																		|
+Le mot que vous avez saisi a l'envers est ;;;;							|
+Voulez-vous recommencer (o/n)											|
+...																		|
+-------------------------------------------------------------------------
+
+Procédure Miroir()
+
+VAR mot, MotInverse, a, rep : char
+	I,i : entiers
+
+Debut
+	Afficher" Menu Miroir"
+	Afficher" Ce programme affiche le mot saisie dans l'ordre inverse"
+	TANT QUE rep <> 'N' faire
+		Afficher" Saisir un mot"
+		Saisir mot
+		I <-- LONGUEUR(mot)
+		Pour i de (I-1) à 0 faire
+			a <-- mot[i] 	( enregistre la derniere lettre de 'mot' dans 'a')
+			MotInverse[I-i-1] <-- a		( Permet de mettre la derniere lettre 
+			du mot 'mot' à la place de la 1ère lettre du mot 'mot inverse')
+		FinPour
+		Afficher "Le mot que vous avez saisi a l'envers est" MotInverse
+		Afficher " Voulez-vous réessayer? (O/N) "
+		Saisir rep
+	FINTANTQUE
+FIN
+__________________________________________________________________________________
+
+ECRAN PALINDROME :
+------------------------------------------------------------------------
+Menu Palindrome :                                                             
+Ce programme demande à l'utilisateur de saisir un mot puis il dit si 	|
+celui-ci est un Palindrome ou non										|			   
+Saisir un mot :															|
+...															   			|
+Le mot ';;;;' (n')est (pas) un Palindrome 								|	
+Voulez-vous recommencer (o/n)											|     
+...																			 
+------------------------------------------------------------------------
+
+
+Procédure Palindrome()
+
+VAR rep, t[0-99] : char
+	i, j, p : entier
+
+DEBUT
+	Afficher" Menu Palindrome"
+	Afficher" Ce programme dit si le mot que vous avez saisi est un 
+	Palindrome ou non"
+	i = 0
+	p = 1
+	Tant que rep <> 'N'
+		Afficher" Saisir un mot"
+		Saisir t
+		j <-- LONGUEUR(t)
+		Tant que i <= j%2 et j >= j%2 et p = 1		
+			Si (t[i] = t[j])
+				p = 1
+			Sinon
+				p = 0
+			FinSi
+			i <-- i + 1
+			j <-- j - 1
+		FinTantQue
+		Si p = 1
+			Afficher " Le mot" t "est un palindrome"
+		Sinon
+			Afficher " Le mot" t "n'est pas un palindrome"
+		FinSi
+		Afficher " Voulez-vous recommencer ? (O/N)"
+		Saisir rep
+	FinTantQue
+FIN
+
+1. t[i] = k et t[j] = k
+2. t[i] = a et t[j] = a
+3. t[i] = y et t[j] = y
+4. t[i] = a et t[j] = a
+5. t[i] = k et t[j] = k
+
+_________________________________________________________________________
+
+ECRAN CONJUGAISON :
+----------------------------------------------------------------------------
+Menu Conjugaison :																	 
+Ce programme conjugue une verbe du 1er groupe au présent, 
+à l’imparfait et au futur.     
+Saisir le verbe à l'infinitif :															 
+...																			      	 	 
+Au présent :																			 
+Je chante, tu chantes, il chante, nous chantons, vous chantez, ils chantent				
+																						
+A l'imparfait :																			 
+Je chantais, tu chantais, il chantait, nous chantions, vous chantiez,
+ ils chantaient     
+																						 
+Au futur :																				 
+Je chanterai, tu chanteras, il chantera, nous chanterons, vous chanterez,
+ ils chanteront 
+Voulez-vous recommencer (o/n)											          		 
+...																			  		 	 
+--------------------------------------------------------------------------
+
+Procédure Conjugaison()
+
+VAR verbe : char
+	char pronomp[0-17]= {"je", "tu", "il/elle", "nous", "vous", "ils/elles", "je", "tu", "il/elle",
+						"nous", "vous", "ils/elles", "je" , "tu", "il/elle", "nous", "vous", "ils/elles"}
+	char terminaison[0-17] = {"e", "es", "e", "ons", "ez", "ent", "ais", "ais", "ait", "ions", "iez", "aient", "erai", "eras", "erai", "erons" ,"erez", "eront"}			
+	rep, verbe[0-99], adresseTerminaison : char
+	i : entier
+
+
+DEBUT
+	Afficher" Menu Conjugaison"
+	Afficher" Ce programme conjugue au présent, à l'impafait et au futur un verbe du 1er groupe que vous saisissez"
+	Tant que rep <> 'N' 
+		Afficher" Saisir un verbe du 1er groupe a l'infinitif : "
+		REPETER
+			Saisir verbe
+			adresseTerminaison = verbe + LONGUEUR(verbe) - 2
+		Tant que comparé(adresseTerminaison,'er')
+			Pour i allant de 0 à 18 faire
+			
+				Souschaine(adresseTerminaison, terminaison[i])
+				Afficher pronomp[i]" ", verbe
+			
+			FinPour
+			Afficher "Voulez-vous recommencer ? (O/N)"
+			Saisir rep
+		FIN TANT QUE
+	FIN TANT QUE
+FIN
+
+
+
+ECRAN PP Valse des mots : 
+------------------------------------------------------------------------
+La valse des mots														|
+Ce programme permet de jouer avec les mots !							|
+Menu principal															|
+C : Conjugaison															|
+M : Miroir																|
+P : Palindrome															|
+O : Occurrence															|
+Q : Quitter																|
+Choisissez ce que vous voulez faire, en saisissant une des lettres : 	|
+...																		|
+																		|
+Erreur ! cette lettre ne correspond à aucun choix ! Reessayez ! 		|
+...																		|
+Vous quittez le programme, à la prochaine ! 							|
+------------------------------------------------------------------------
+
+
+
+Programme Principale Valse des mots
+
+VAR	NbOption : char
+
+DEBUT
+	Afficher " La valse des mots" 
+	Afficher " Ce programme permet de jouer avec les mots !"
+	TANT QUE NbOption <> 'Q'
+		Affichemenu()
+		Saisir NbOption
+		Si NbOption = 'C' alors 
+		
+			Conjugaison()
+		
+		FinSi
+		
+		Si NbOption = 'M' alors
+		
+			Miroir()
+		
+		FinSi
+		
+		Si NbOption = 'P' alors
+		
+			Palindrome()
+		
+		FinSi
+		
+		Si NbOption = 'O' alors
+			
+			Occurrence()
+			
+		FinSi
+		
+		Si NbOption <> 'Q' et NbOption <> 'C' et NbOption <> 'M' et NbOption <> 'P' et NbOption <> 'O'
+		
+			Afficher " Erreur ! cette lettre ne correspond à aucun choix ! Reessayez ! "
+		
+		FinSi
+	FINTANTQUE
+	Afficher " Vous quittez le programme, à la prochaine ! "
+FIN		
+	
